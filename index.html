@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRITZ'S BIZARRE COUNTDOWN ★</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@500;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink-light: #ffd6e8;
+      --pink-hot: #ff4d94;
+      --plum-dark: #180c14;
+      --red-death: #d90429;
+      --cream: #fff8fa;
+      --jojo-gold: #ffd166;
+      --jojo-purple: #5a189a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Oswald', sans-serif;
+      color: var(--plum-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+      /* Original Pink Gingham Look */
+      background-color: #ffe6f0;
+      background-image:
+        linear-gradient(90deg, rgba(255, 77, 148, 0.14) 50%, transparent 50%),
+        linear-gradient(rgba(255, 77, 148, 0.14) 50%, transparent 50%);
+      background-size: 36px 36px;
+      padding: 20px 14px 60px;
+    }
+
+    /* Floating Stickers */
+    .bg-stickers .sticker {
+      position: fixed;
+      font-family: 'Bangers', cursive;
+      font-size: 2.2rem;
+      opacity: 0.28;
+      pointer-events: none;
+      z-index: 0;
+      animation: floaty 5.5s ease-in-out infinite;
+    }
+    .s1 { top: 8%; left: 5%; color: var(--red-death); }
+    .s2 { top: 20%; right: 6%; color: var(--jojo-purple); animation-delay: 1s; }
+    .s3 { top: 50%; left: 4%; animation-delay: 2s; }
+    .s4 { bottom: 18%; right: 6%; animation-delay: 1.5s; }
+    .s5 { bottom: 8%; left: 10%; color: var(--red-death); animation-delay: 2.8s; }
+    .s6 { top: 72%; right: 10%; color: var(--pink-hot); }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0) rotate(-4deg); }
+      50% { transform: translateY(-14px) rotate(6deg); }
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Scrapbook Header */
+    .scrapbook-header {
+      background: var(--cream);
+      border: 3px solid var(--plum-dark);
+      box-shadow: 6px 6px 0 var(--pink-hot);
+      padding: 24px 16px;
+      text-align: center;
+      position: relative;
+      transform: rotate(-1deg);
+    }
+
+    .tape {
+      width: 90px;
+      height: 22px;
+      background: rgba(255, 182, 193, 0.78);
+      border: 1px dashed var(--pink-hot);
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%) rotate(2deg);
+    }
+
+    .mini-tag {
+      font-family: 'Bangers', cursive;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      background: var(--plum-dark);
+      color: var(--pink-light);
+      display: inline-block;
+      padding: 3px 12px;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-family: 'Bangers', cursive;
+      font-size: 3rem;
+      letter-spacing: 3px;
+      line-height: 0.98;
+      color: var(--plum-dark);
+      text-shadow: 3px 3px 0 var(--pink-light);
+    }
+    .title span { color: var(--pink-hot); }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 0.98rem;
+      color: #5c3a4d;
+    }
+
+    /* Retro Y2K Windows */
+    .retro-window {
+      background: var(--cream);
+      border: 3px solid var(--plum-dark);
+      box-shadow: 6px 6px 0 var(--plum-dark);
+    }
+
+    .retro-window.dark-punk {
+      background: var(--plum-dark);
+      color: var(--cream);
+      box-shadow: 6px 6px 0 var(--red-death);
+    }
+
+    .window-bar {
+      background: linear-gradient(90deg, #ff7eb3, #ffb3d9);
+      border-bottom: 3px solid var(--plum-dark);
+      padding: 6px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Bangers', cursive;
+      font-size: 1.35rem;
+      letter-spacing: 1.5px;
+      color: var(--plum-dark);
+    }
+
+    .punk-bar {
+      background: linear-gradient(90deg, var(--red-death), #7b0d1e);
+      color: #fff;
+    }
+
+    .window-btns button {
+      background: var(--cream);
+      border: 2px solid var(--plum-dark);
+      width: 24px;
+      height: 24px;
+      font-family: 'Bangers', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .window-body { padding: 18px; }
+
+    /* Countdown Grid */
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      text-align: center;
+    }
+
+    .time-box {
+      background: var(--plum-dark);
+      color: var(--pink-light);
+      border: 2.5px solid var(--pink-hot);
+      padding: 12px 4px;
+    }
+
+    .time-box span {
+      font-family: 'Bangers', cursive;
+      font-size: 2.7rem;
+      letter-spacing: 2px;
+      display: block;
+      line-height: 1;
+    }
+
+    .time-box label {
+      font-family: 'Bangers', cursive;
+      font-size: 0.9rem;
+      letter-spacing: 1.5px;
+      color: var(--jojo-gold);
+    }
+
+    /* Buttons */
+    .pink-btn {
+      background: var(--pink-hot);
+      color: #fff;
+      border: 2.5px solid var(--plum-dark);
+      box-shadow: 3px 3px 0 var(--plum-dark);
+      padding: 9px 18px;
+      font-family: 'Bangers', cursive;
+      font-size: 1.25rem;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .pink-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--plum-dark); }
+    .small-btn { padding: 6px 14px; font-size: 1rem; }
+
+    /* NEW 1: Rigged Bill Spinner */
+    .spinner-box { text-align: center; }
+    .slot-display {
+      background: var(--plum-dark);
+      color: var(--jojo-gold);
+      border: 3px solid var(--pink-hot);
+      font-family: 'Bangers', cursive;
+      font-size: 1.9rem;
+      letter-spacing: 2px;
+      padding: 16px 10px;
+      margin: 12px 0;
+      min-height: 68px;
+      display: grid;
+      place-items: center;
+    }
+    .roast-note {
+      font-size: 0.95rem;
+      margin-top: 10px;
+      color: var(--red-death);
+      font-weight: 700;
+      min-height: 22px;
+    }
+
+    /* NEW 2: Rage-Bait BP Boss Fight */
+    .bp-header {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Bangers', cursive;
+      font-size: 1.2rem;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+      color: var(--pink-light);
+    }
+    .bp-track {
+      width: 100%;
+      height: 22px;
+      background: #2b1624;
+      border: 2px solid var(--pink-hot);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    #bp-fill {
+      height: 100%;
+      width: 20%;
+      background: linear-gradient(90deg, var(--jojo-gold), var(--red-death));
+      transition: width 0.25s ease;
+    }
+    .bait-quote {
+      background: #2b1624;
+      border-left: 4px solid var(--pink-hot);
+      padding: 12px;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 14px;
+      min-height: 54px;
+    }
+    .bp-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    /* NEW 3: Rigged Drive & Snack Order */
+    .order-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 1rem;
+    }
+    .order-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff0f6;
+      border: 2px solid var(--plum-dark);
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .order-item input { width: 18px; height: 18px; accent-color: var(--pink-hot); }
+    .receipt-box {
+      margin-top: 14px;
+      background: #fff;
+      border: 2px dashed var(--plum-dark);
+      padding: 14px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+    .receipt-box h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 1.5px;
+      color: var(--pink-hot);
+      margin-bottom: 6px;
+    }
+
+    /* NEW 4: 3-Box Scratch / Tap Gift Card */
+    .scratch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .scratch-card {
+      background: repeating-linear-gradient(45deg, var(--pink-hot), var(--pink-hot) 8px, #ff7eb3 8px, #ff7eb3 16px);
+      border: 3px solid var(--plum-dark);
+      color: #fff;
+      font-family: 'Bangers', cursive;
+      font-size: 1.25rem;
+      letter-spacing: 1px;
+      height: 92px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .scratch-card.revealed {
+      background: var(--plum-dark);
+      color: var(--jojo-gold);
+    }
+
+    /* ZA WARUDO Effect */
+    body.time-stop { filter: invert(1) hue-rotate(180deg); transition: filter 0.25s; }
+    #za-warudo-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 0, 25, 0.92);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .zawarudo-text {
+      font-family: 'Bangers', cursive;
+      font-size: 4.6rem;
+      color: var(--jojo-gold);
+      letter-spacing: 4px;
+      text-shadow: 5px 5px 0 var(--red-death);
+      animation: shake 0.14s infinite;
+    }
+    .zawarudo-sub {
+      font-family: 'Bangers', cursive;
+      color: #fff;
+      margin-top: 10px;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+    }
+    @keyframes shake {
+      0% { transform: translate(2px, 2px); }
+      50% { transform: translate(-3px, -2px); }
+      100% { transform: translate(2px, -2px); }
+    }
+
+    /* JOJO FINALE */
+    #jojo-finale { max-width: 600px; margin: 0 auto; position: relative; z-index: 5; }
+    .menacing-bg {
+      text-align: center;
+      font-family: 'Bangers', cursive;
+      font-size: 2.2rem;
+      color: var(--jojo-purple);
+      letter-spacing: 8px;
+      margin-bottom: 10px;
+      animation: shake 0.4s infinite;
+    }
+    .jojo-card {
+      background: linear-gradient(135deg, #240046, #10002b);
+      color: #fff;
+      border: 4px solid var(--jojo-gold);
+      box-shadow: 8px 8px 0 var(--pink-hot);
+      padding: 26px 20px;
+      text-align: center;
+    }
+    .jojo-badge {
+      display: inline-block;
+      background: var(--red-death);
+      color: #fff;
+      font-family: 'Bangers', cursive;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      margin-bottom: 12px;
+    }
+    .jojo-headline {
+      font-family: 'Bangers', cursive;
+      font-size: 3.5rem;
+      color: var(--jojo-gold);
+      letter-spacing: 3px;
+      line-height: 0.95;
+      text-shadow: 4px 4px 0 var(--pink-hot);
+      margin-bottom: 14px;
+    }
+    .jojo-fakeout { font-size: 1rem; color: var(--pink-light); margin-bottom: 20px; }
+    .stand-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid var(--jojo-gold);
+      padding: 14px;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+    .stand-header {
+      font-family: 'Bangers', cursive;
+      font-size: 1.2rem;
+      letter-spacing: 1.5px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-bottom: 1px dashed var(--jojo-gold);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      color: var(--jojo-gold);
+    }
+    .stand-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.9rem; }
+    .stand-stats div {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 6px 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .stand-stats strong { font-family: 'Bangers', cursive; font-size: 1.15rem; color: var(--pink-hot); }
+    .real-wish {
+      background: var(--cream);
+      color: var(--plum-dark);
+      border: 3px solid var(--pink-hot);
+      padding: 20px 16px;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .real-wish h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      letter-spacing: 1.5px;
+      color: var(--pink-hot);
+      margin-bottom: 8px;
+    }
+    .real-wish p { font-size: 0.96rem; line-height: 1.55; }
+    .tbc-arrow {
+      display: inline-block;
+      background: #e9d8a6;
+      color: #1d1d1d;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: bold;
+      padding: 8px 24px;
+      clip-path: polygon(10% 0%, 100% 0%, 95% 50%, 100% 100%, 10% 100%, 0% 50%);
+      margin-bottom: 18px;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(24, 12, 20, 0.78);
+      display: grid;
+      place-items: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .modal-box { max-width: 340px; width: 100%; text-align: center; }
+    .modal-box p { margin-bottom: 14px; font-size: 1rem; font-weight: 700; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="bg-stickers" aria-hidden="true">
+    <span class="sticker s1">★</span>
+    <span class="sticker s2">ゴゴ</span>
+    <span class="sticker s3">🍟</span>
+    <span class="sticker s4">🦜</span>
+    <span class="sticker s5">ゴゴ</span>
+    <span class="sticker s6">🚗</span>
+  </div>
+
+  <div id="za-warudo-overlay" class="hidden">
+    <div class="zawarudo-text">ZA WARUDO!!</div>
+    <div class="zawarudo-sub">TOKI WO TOMARE! (TIME STOPPED, AGE DIDN'T)</div>
+  </div>
+
+  <main id="countdown-view" class="container">
+    <!-- Header -->
+    <header class="scrapbook-header">
+      <div class="tape"></div>
+      <p class="mini-tag">★ CASE FILE: 25 NOV // BLACK STONES 707 ★</p>
+      <h1 class="title">PRITZ'S BIZARRE<br><span>BIRTHDAY COUNTDOWN</span></h1>
+      <p class="subtitle">"Unna rage-bait panradhu dhaan en life-oda #1 Stand Ability 😌💅"</p>
+    </header>
+
+    <!-- Countdown -->
+    <section class="retro-window">
+      <div class="window-bar">
+        <span>⏳ PRITZ_GETTING_OLD.EXE</span>
+        <div class="window-btns"><button onclick="fakeClose()">✕</button></div>
+      </div>
+      <div class="window-body">
+        <div class="timer-grid">
+          <div class="time-box"><span id="days">00</span><label>DAYS</label></div>
+          <div class="time-box"><span id="hours">00</span><label>HRS</label></div>
+          <div class="time-box"><span id="minutes">00</span><label>MINS</label></div>
+          <div class="time-box"><span id="seconds">00</span><label>SECS</label></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW INTERACTIVE 1: Rigged Bill Spinner -->
+    <section class="retro-window">
+      <div class="window-bar">
+        <span>🎰 WHO PAYS FOR PANI PURI & FRIES?</span>
+        <div class="window-btns"><button onclick="fakeClose()">✕</button></div>
+      </div>
+      <div class="window-body spinner-box">
+        <p>Spin to see who's paying for the birthday drive & snacks:</p>
+        <div id="slot-display" class="slot-display">???</div>
+        <button id="spin-btn" class="pink-btn">🎲 SPIN THE WHEEL</button>
+        <p id="spin-roast" class="roast-note"></p>
+      </div>
+    </section>
+
+    <!-- NEW INTERACTIVE 2: Rage-Bait BP Boss Fight -->
+    <section class="retro-window dark-punk">
+      <div class="window-bar punk-bar">
+        <span>💢 RAGE-BAIT SURVIVAL CHALLENGE</span>
+        <div class="window-btns"><button onclick="fakeClose()">✕</button></div>
+      </div>
+      <div class="window-body">
+        <div class="bp-header">
+          <span>PRITZ'S BP METER</span>
+          <span id="bp-percent">20%</span>
+        </div>
+        <div class="bp-track"><div id="bp-fill"></div></div>
+        <div id="bait-quote" class="bait-quote">"Ready-ah? Stay calm panna try pannu ma..."</div>
+        <div class="bp-actions">
+          <button id="calm-btn" class="pink-btn small-btn">🧘 STAY CALM</button>
+          <button id="ora-btn" class="pink-btn small-btn">🥊 ORA ORA BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW INTERACTIVE 3: Rigged Drive & Snack Builder -->
+    <section class="retro-window">
+      <div class="window-bar">
+        <span>🚗 BIRTHDAY DRIVE & SNACK ORDER</span>
+        <div class="window-btns"><button onclick="fakeClose()">✕</button></div>
+      </div>
+      <div class="window-body">
+        <div class="order-list">
+          <label class="order-item"><input type="checkbox" checked value="Extra Spicy Pani Puri 🥙"> Extra Spicy Pani Puri 🥙</label>
+          <label class="order-item"><input type="checkbox" checked value="Crispy French Fries 🍟"> Crispy French Fries 🍟</label>
+          <label class="order-item"><input type="checkbox" checked value="Long Drive + Vibes 🚗"> Long Drive + Vibes 🚗</label>
+          <label class="order-item"><input type="checkbox" id="no-rage-check"> No Rage-Bait Allowed Today 🚫</label>
+        </div>
+        <button id="order-btn" class="pink-btn">🧾 GENERATE BIRTHDAY RECEIPT</button>
+        <div id="receipt-box" class="receipt-box hidden"></div>
+      </div>
+    </section>
+
+    <!-- NEW INTERACTIVE 4: 3-Box Tap-to-Reveal Gift -->
+    <section class="retro-window">
+      <div class="window-bar">
+        <span>🎁 EARLY BIRTHDAY GIFT REVEAL</span>
+        <div class="window-btns"><button onclick="fakeClose()">✕</button></div>
+      </div>
+      <div class="window-body" style="text-align:center;">
+        <p>Tap all 3 boxes in order to unlock your early gift:</p>
+        <div class="scratch-grid">
+          <div class="scratch-card" data-reveal="A BRAND NEW... ✨">TAP BOX 1</div>
+          <div class="scratch-card" data-reveal="WAIT FOR IT... 👀">TAP BOX 2</div>
+          <div class="scratch-card" data-reveal="KONO DIO DA! (NO GIFT TILL 25 NOV 💀)">TAP BOX 3</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- JOJO MIDNIGHT FINALE -->
+  <section id="jojo-finale" class="hidden">
+    <div class="menacing-bg">ゴゴゴゴゴゴゴゴ</div>
+    <div class="jojo-card">
+      <div class="jojo-badge">★ MENACING BIRTHDAY UNLOCKED ★</div>
+      <h1 class="jojo-headline">KONO PRITZ<br>BIRTHDAY DA!!</h1>
+      <p class="jojo-fakeout">
+        "You thought it was a soft pastel <em>Kimi ni Todoke</em> birthday wish...<br>
+        <strong>BUT IT WAS ME, VAYASU AAGIDUCHU!!</strong>"
+      </p>
+      <div class="stand-box">
+        <div class="stand-header">
+          <span>STAND MASTER: PRITZ</span>
+          <span>STAND NAME: 「PARROT PLATINUM」</span>
+        </div>
+        <div class="stand-stats">
+          <div><span>JOJO POSE AURA</span><strong>S+</strong></div>
+          <div><span>PANI PURI & FRIES</span><strong>∞</strong></div>
+          <div><span>RAGE-BAIT TRIGGER</span><strong>0.01S</strong></div>
+          <div><span>PARROT OBEDIENCE</span><strong>0%</strong></div>
+        </div>
+      </div>
+      <div class="real-wish">
+        <div class="tape"></div>
+        <h2>HAPPY BIRTHDAY, PRITZ!! 🎂🦜🍟🚗</h2>
+        <p>
+          Yare Yare Daze... oru vazhiya <strong>25 Nov</strong> vandhuduchu!
+          Unna rage-bait panradhu dhaan enaku ulagathulaye favourite vishayam,
+          aana adhuku apram namma <strong>pani puri, french fries</strong> saaptutu
+          <strong>drive</strong> poradhu dhaan best part.
+          Indha varushamum un aesthetic-um, un JoJo poses-um, un parrot-oda chaos-um
+          mass-ah irukkattum. Stay chaotic, stay iconic! 💀💖
+        </p>
+      </div>
+      <div class="tbc-arrow"><span>◀══ To Be Continued (Next Drive)</span></div>
+      <br>
+      <button id="replay-btn" class="pink-btn">↺ BACK TO COUNTDOWN</button>
+    </div>
+  </section>
+
+  <!-- Fake Modal -->
+  <div id="fake-modal" class="modal hidden">
+    <div class="retro-window modal-box">
+      <div class="window-bar punk-bar">
+        <span>⚠️ KILLER QUEEN ALERT</span>
+        <button onclick="closeModal()">✕</button>
+      </div>
+      <div class="panel-body" style="padding:18px;">
+        <p id="modal-text">Killer Queen has already touched that close button! 💣</p>
+        <button class="pink-btn small-btn" onclick="closeModal()">YARE YARE 🙄</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // TARGET: November 25, 2026 at 00:00:00 IST
+    const TARGET_DATE = new Date("2026-11-25T00:00:00+05:30").getTime();
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minsEl = document.getElementById("minutes");
+    const secsEl = document.getElementById("seconds");
+    let finaleTriggered = false;
+
+    function updateCountdown() {
+      const diff = TARGET_DATE - new Date().getTime();
+      if (diff <= 0) {
+        daysEl.textContent = "00"; hoursEl.textContent = "00";
+        minsEl.textContent = "00"; secsEl.textContent = "00";
+        if (!finaleTriggered) triggerJojoFinale();
+        return;
+      }
+      daysEl.textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, "0");
+      hoursEl.textContent = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, "0");
+      minsEl.textContent = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, "0");
+      secsEl.textContent = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // 1. Rigged Bill Spinner
+    const spinBtn = document.getElementById("spin-btn");
+    const slotDisplay = document.getElementById("slot-display");
+    const spinRoast = document.getElementById("spin-roast");
+    const spinOptions = ["FRIEND PAYS 100%", "FREE TREAT!", "PARROT PAYS 🦜", "50/50 SPLIT", "PRITZ PAYS 100% 💀"];
+    let spinning = false;
+
+    spinBtn.addEventListener("click", () => {
+      if (spinning) return;
+      spinning = true;
+      spinRoast.textContent = "";
+      let ticks = 0;
+      const spinInt = setInterval(() => {
+        slotDisplay.textContent = spinOptions[ticks % spinOptions.length];
+        ticks++;
+        if (ticks > 16) {
+          clearInterval(spinInt);
+          slotDisplay.textContent = "PRITZ PAYS 100% 💀";
+          spinRoast.textContent = "MUDA MUDA! Ethana vaati spin pannalum bill unnodadhu dhaan 😂🍟";
+          spinning = false;
+        }
+      }, 90);
+    });
+
+    // 2. Rage-Bait BP Boss Fight
+    const bpFill = document.getElementById("bp-fill");
+    const bpPercent = document.getElementById("bp-percent");
+    const baitQuote = document.getElementById("bait-quote");
+    const baits = [
+      "\"Un JoJo pose-ah vida un parrot pose 10x mass-ah iruku! 🦜\"",
+      "\"Pani puri saapda pogalam, aana extra sukha puri kedaikadhu!\"",
+      "\"Drive pogalam, aana full route-um naan dhaan playlist poduven! 🚗\"",
+      "\"French fries order pannalam, aana 80% naan dhaan saapduven! 🍟\"",
+      "\"STAND OVERLOAD!! BP 100% REACHED! Rage-bait mission successful 😂💀\""
+    ];
+    let bp = 20, baitIdx = 0;
+
+    function triggerBait(actionText) {
+      bp = Math.min(100, bp + 20);
+      bpFill.style.width = bp + "%";
+      bpPercent.textContent = bp === 100 ? "999% (MAX)" : bp + "%";
+      baitQuote.textContent = actionText + " → " + baits[baitIdx % baits.length];
+      baitIdx++;
+    }
+    document.getElementById("calm-btn").addEventListener("click", () => triggerBait("Calm aaga try panna"));
+    document.getElementById("ora-btn").addEventListener("click", () => triggerBait("ORA ORA panna"));
+
+    // 3. Rigged Drive & Snack Builder
+    const noRageCheck = document.getElementById("no-rage-check");
+    noRageCheck.addEventListener("change", () => {
+      if (noRageCheck.checked) {
+        setTimeout(() => {
+          noRageCheck.checked = false;
+          showModal("DAGA KOTOWARU! (I refuse!) Rage-bait illama birthday-ah?! Impossible 💀");
+        }, 250);
+      }
+    });
+
+    document.getElementById("order-btn").addEventListener("click", () => {
+      const checked = [...document.querySelectorAll(".order-item input:checked")].map(i => "• " + i.value);
+      const box = document.getElementById("receipt-box");
+      box.classList.remove("hidden");
+      box.innerHTML = `
+        <h3>🧾 OFFICIAL BIRTHDAY RECEIPT</h3>
+        ${checked.length ? checked.join("<br>") : "• Empty plate (Diet-ah ma?)"}<br>
+        • <strong>Unlimited Rage-Bait (MANDATORY)</strong><br>
+        <hr style="margin:8px 0;border:1px dashed #180c14;">
+        <strong>TOTAL COST:</strong> 5 JoJo Poses + 1 Happy Birthday Smile 💖
+      `;
+    });
+
+    // 4. 3-Box Tap-to-Reveal Gift
+    document.querySelectorAll(".scratch-card").forEach(card => {
+      card.addEventListener("click", () => {
+        card.classList.add("revealed");
+        card.textContent = card.dataset.reveal;
+      });
+    });
+
+    // 5. ZA WARUDO Midnight Finale
+    const overlay = document.getElementById("za-warudo-overlay");
+    const countdownView = document.getElementById("countdown-view");
+    const jojoFinale = document.getElementById("jojo-finale");
+
+    function triggerJojoFinale() {
+      finaleTriggered = true;
+      document.body.classList.add("time-stop");
+      overlay.classList.remove("hidden");
+      setTimeout(() => {
+        document.body.classList.remove("time-stop");
+        overlay.classList.add("hidden");
+        countdownView.classList.add("hidden");
+        jojoFinale.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 2400);
+    }
+
+    document.getElementById("replay-btn").addEventListener("click", () => {
+      jojoFinale.classList.add("hidden");
+      countdownView.classList.remove("hidden");
+    });
+
+    function fakeClose() {
+      showModal("Killer Queen has already touched that close button! Rage-bait-ah muzhusa paathutu po 💣😤");
+    }
+    function showModal(msg) {
+      document.getElementById("modal-text").textContent = msg;
+      document.getElementById("fake-modal").classList.remove("hidden");
+    }
+    function closeModal() {
+      document.getElementById("fake-modal").classList.add("hidden");
+    }
+  </script>
+</body>
+</html>
